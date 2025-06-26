@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.example.backend.exceptions.custom.EntityBorrowedException;
-import org.example.backend.exceptions.custom.EntityNullException;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -116,7 +115,7 @@ class UserControllerTest {
     @Test
     void createUser_userExists_returnsConflict() throws Exception {
         Mockito.when(userService.createUser(any(UserCreationRequest.class)))
-                .thenThrow(new EntityNullException("User already exists"));
+                .thenThrow(new IllegalArgumentException("User already exists"));
 
         mockMvc.perform(post("/user/create")
                 .contentType(MediaType.APPLICATION_JSON)

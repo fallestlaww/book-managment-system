@@ -1,10 +1,8 @@
 package org.example.backend.service.impl;
 
-import jakarta.persistence.EntityNotFoundException;
 import org.example.backend.dto.request.BookCreationRequest;
 import org.example.backend.dto.request.BookUpdateRequest;
 import org.example.backend.exceptions.custom.EntityBorrowedException;
-import org.example.backend.exceptions.custom.EntityNullException;
 import org.example.backend.model.Book;
 import org.example.backend.repository.BookRepository;
 import org.example.backend.service.BookService;

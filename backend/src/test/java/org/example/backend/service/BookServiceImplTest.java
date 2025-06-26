@@ -3,7 +3,6 @@ package org.example.backend.service;
 import org.example.backend.dto.request.BookCreationRequest;
 import org.example.backend.dto.request.BookUpdateRequest;
 import org.example.backend.exceptions.custom.EntityBorrowedException;
-import org.example.backend.exceptions.custom.EntityNullException;
 import org.example.backend.model.Book;
 import org.example.backend.repository.BookRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -85,7 +84,7 @@ class BookServiceImplTest {
 
     @Test
     void createBook_nullRequest_throwsException() {
-        assertThrows(EntityNullException.class, () -> bookService.createBook(null));
+        assertThrows(IllegalArgumentException.class, () -> bookService.createBook(null));
     }
 
     @Test
@@ -133,12 +132,12 @@ class BookServiceImplTest {
 
     @Test
     void updateBook_nullId_throwsException() {
-        assertThrows(EntityNullException.class, () -> bookService.updateBook(null, updateRequest));
+        assertThrows(IllegalArgumentException.class, () -> bookService.updateBook(null, updateRequest));
     }
 
     @Test
     void updateBook_nullRequest_throwsException() {
-        assertThrows(EntityNullException.class, () -> bookService.updateBook(1L, null));
+        assertThrows(IllegalArgumentException.class, () -> bookService.updateBook(1L, null));
     }
 
     @Test

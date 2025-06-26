@@ -7,7 +7,6 @@ import org.example.backend.dto.request.BookUpdateRequest;
 import org.example.backend.model.Book;
 import org.example.backend.service.BookService;
 import org.example.backend.exceptions.custom.EntityBorrowedException;
-import org.example.backend.exceptions.custom.EntityNullException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -107,7 +106,7 @@ class BookControllerTest {
     @Test
     void createBook_nullRequest_returnsNotFound() throws Exception {
         Mockito.when(bookService.createBook(any(BookCreationRequest.class)))
-                .thenThrow(new EntityNullException("Request cannot be null"));
+                .thenThrow(new IllegalArgumentException("Request cannot be null"));
 
         mockMvc.perform(post("/book/create")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -145,7 +144,7 @@ class BookControllerTest {
     @Test
     void updateBook_nullId_returnsNotFound() throws Exception {
         Mockito.when(bookService.updateBook(eq(1L), any(BookUpdateRequest.class)))
-                .thenThrow(new EntityNullException("Id can not be null"));
+                .thenThrow(new IllegalArgumentException("Id can not be null"));
 
         mockMvc.perform(put("/book/1")
                 .contentType(MediaType.APPLICATION_JSON)

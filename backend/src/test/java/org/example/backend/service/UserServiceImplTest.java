@@ -3,7 +3,6 @@ package org.example.backend.service;
 import org.example.backend.dto.request.UserCreationRequest;
 import org.example.backend.dto.request.UserUpdateRequest;
 import org.example.backend.exceptions.custom.EntityBorrowedException;
-import org.example.backend.exceptions.custom.EntityNullException;
 import org.example.backend.model.User;
 import org.example.backend.repository.UserRepository;
 import jakarta.persistence.EntityExistsException;
@@ -61,13 +60,13 @@ class UserServiceImplTest {
 
     @Test
     void createUser_nullRequest_throwsException() {
-        assertThrows(EntityNullException.class, () -> userService.createUser(null));
+        assertThrows(IllegalArgumentException.class, () -> userService.createUser(null));
     }
 
     @Test
     void createUser_userExists_throwsException() {
         when(userRepository.findByName("John")).thenReturn(new User());
-        assertThrows(EntityNullException.class, () -> userService.createUser(creationRequest));
+        assertThrows(IllegalArgumentException.class, () -> userService.createUser(creationRequest));
     }
 
     @Test
@@ -96,12 +95,12 @@ class UserServiceImplTest {
 
     @Test
     void updateUser_nullId_throwsException() {
-        assertThrows(EntityNullException.class, () -> userService.updateUser(null, updateRequest));
+        assertThrows(IllegalArgumentException.class, () -> userService.updateUser(null, updateRequest));
     }
 
     @Test
     void updateUser_nullRequest_throwsException() {
-        assertThrows(EntityNullException.class, () -> userService.updateUser(1L, null));
+        assertThrows(IllegalArgumentException.class, () -> userService.updateUser(1L, null));
     }
 
     @Test

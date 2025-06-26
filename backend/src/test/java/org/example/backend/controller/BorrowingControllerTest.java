@@ -9,7 +9,6 @@ import org.example.backend.model.Book;
 import org.example.backend.model.Borrowing;
 import org.example.backend.model.User;
 import org.example.backend.service.impl.BorrowingServiceImpl;
-import org.example.backend.exceptions.custom.EntityNullException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -112,7 +111,7 @@ class BorrowingControllerTest {
     @Test
     void getBorrowedBooksByName_invalidRequest_returnsNotFound() throws Exception {
         Mockito.when(borrowingService.getBorrowedBooksByUserName(any(UserInformationRequest.class)))
-                .thenThrow(new EntityNullException("Request cannot be null"));
+                .thenThrow(new IllegalArgumentException("Request cannot be null"));
 
         mockMvc.perform(get("/borrowing/name")
                 .contentType(MediaType.APPLICATION_JSON)

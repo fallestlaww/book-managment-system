@@ -2,7 +2,6 @@ package org.example.backend.exceptions.controller;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.example.backend.exceptions.custom.EntityBorrowedException;
-import org.example.backend.exceptions.custom.EntityNullException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -29,7 +28,7 @@ public class GlobalExceptionHandler {
         return buildResponse(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 
-    @ExceptionHandler({EntityBorrowedException.class, EntityNullException.class})
+    @ExceptionHandler(EntityBorrowedException.class)
     public ResponseEntity<Object> handleConflict(Exception e) {
         return buildResponse(HttpStatus.CONFLICT, e.getMessage());
     }
