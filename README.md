@@ -17,7 +17,7 @@ A simple full-stack application for managing books and library members. Built wi
 3. **Access the app:**
    - Frontend: [http://localhost:3000](http://localhost:3000)
    - Backend API: [http://localhost:8080](http://localhost:8080)
-   - PostgreSQL: port 5432 (user: `bookuser`, password: `bookpass`, db: `bookdb`)
+   - PostgreSQL: port 5432 (user: `postgres`, password: `root`, db: `book-management`)
 
 4. **Stop all services:**
    ```sh
