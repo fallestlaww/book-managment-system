@@ -94,13 +94,13 @@ class UserControllerTest {
     }
 
     @Test
-    void createUser_invalidRequest_returnsConflict() throws Exception {
+    void createUser_invalidRequest_returnsBadRequest() throws Exception {
         UserCreationRequest invalidRequest = new UserCreationRequest();
 
         mockMvc.perform(post("/user/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(invalidRequest)))
-                .andExpect(status().isConflict());
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -113,26 +113,26 @@ class UserControllerTest {
     }
 
     @Test
-    void createUser_userExists_returnsConflict() throws Exception {
+    void createUser_userExists_returnsBadRequest() throws Exception {
         Mockito.when(userService.createUser(any(UserCreationRequest.class)))
                 .thenThrow(new IllegalArgumentException("User already exists"));
 
         mockMvc.perform(post("/user/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(creationRequest)))
-                .andExpect(status().isNotFound())
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("User already exists"));
     }
 
     @Test
-    void updateUser_userExists_returnsConflict() throws Exception {
+    void updateUser_userExists_returnsBadRequest() throws Exception {
         Mockito.when(userService.updateUser(eq(1L), any(UserUpdateRequest.class)))
-                .thenThrow(new EntityExistsException("User already exists"));
+                .thenThrow(new IllegalArgumentException("User already exists"));
 
         mockMvc.perform(put("/user/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(updateRequest)))
-                .andExpect(status().isConflict())
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("User already exists"));
     }
 

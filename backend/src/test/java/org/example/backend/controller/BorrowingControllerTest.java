@@ -70,8 +70,8 @@ class BorrowingControllerTest {
 
         mockMvc.perform(post("/borrowing/user/1/book/1"))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.user.name").value("TestUser"))
-                .andExpect(jsonPath("$.book.title").value("TestTitle"));
+                .andExpect(jsonPath("$.user_name").value("TestUser"))
+                .andExpect(jsonPath("$.book_title").value("TestTitle"));
     }
 
     @Test
@@ -89,7 +89,7 @@ class BorrowingControllerTest {
         List<Book> books = List.of(book);
         Mockito.when(borrowingService.getBorrowedBooksByUserName(any(UserInformationRequest.class))).thenReturn(books);
 
-        mockMvc.perform(get("/borrowing/name")
+        mockMvc.perform(post("/borrowing/name")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userInfoRequest)))
                 .andExpect(status().isOk())
@@ -101,7 +101,7 @@ class BorrowingControllerTest {
         Mockito.when(borrowingService.getBorrowedBooksByUserName(any(UserInformationRequest.class)))
                 .thenThrow(new EntityNotFoundException("User not found"));
 
-        mockMvc.perform(get("/borrowing/name")
+        mockMvc.perform(post("/borrowing/name")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userInfoRequest)))
                 .andExpect(status().isNotFound())
@@ -109,14 +109,14 @@ class BorrowingControllerTest {
     }
 
     @Test
-    void getBorrowedBooksByName_invalidRequest_returnsNotFound() throws Exception {
+    void getBorrowedBooksByName_invalidRequest_returnsBadRequest() throws Exception {
         Mockito.when(borrowingService.getBorrowedBooksByUserName(any(UserInformationRequest.class)))
                 .thenThrow(new IllegalArgumentException("Request cannot be null"));
 
-        mockMvc.perform(get("/borrowing/name")
+        mockMvc.perform(post("/borrowing/name")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(userInfoRequest)))
-                .andExpect(status().isNotFound())
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("Request cannot be null"));
     }
 

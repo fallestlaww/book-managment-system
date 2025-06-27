@@ -86,6 +86,11 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setName(request.getName());
+        
+        if (request.getNumberOfBorrowedBooks() != null) {
+            user.setNumberOfBorrowedBooks(request.getNumberOfBorrowedBooks());
+        }
+        
         return userRepository.save(user);
     }
 

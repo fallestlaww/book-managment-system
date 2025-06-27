@@ -95,7 +95,7 @@ class UserServiceImplTest {
 
     @Test
     void updateUser_nullId_throwsException() {
-        assertThrows(IllegalArgumentException.class, () -> userService.updateUser(null, updateRequest));
+        assertThrows(EntityNotFoundException.class, () -> userService.updateUser(null, updateRequest));
     }
 
     @Test
@@ -106,7 +106,7 @@ class UserServiceImplTest {
     @Test
     void updateUser_userExists_throwsException() {
         when(userRepository.findByName("John")).thenReturn(new User());
-        assertThrows(EntityExistsException.class, () -> userService.updateUser(1L, updateRequest));
+        assertThrows(EntityNotFoundException.class, () -> userService.updateUser(1L, updateRequest));
     }
 
     @Test

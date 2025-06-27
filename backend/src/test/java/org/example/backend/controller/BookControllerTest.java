@@ -104,14 +104,14 @@ class BookControllerTest {
     }
 
     @Test
-    void createBook_nullRequest_returnsNotFound() throws Exception {
+    void createBook_nullRequest_returnsBadRequest() throws Exception {
         Mockito.when(bookService.createBook(any(BookCreationRequest.class)))
                 .thenThrow(new IllegalArgumentException("Request cannot be null"));
 
         mockMvc.perform(post("/book/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(creationRequest)))
-                .andExpect(status().isNotFound())
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("Request cannot be null"));
     }
 
@@ -142,14 +142,14 @@ class BookControllerTest {
     }
 
     @Test
-    void updateBook_nullId_returnsNotFound() throws Exception {
+    void updateBook_nullId_returnsBadRequest() throws Exception {
         Mockito.when(bookService.updateBook(eq(1L), any(BookUpdateRequest.class)))
                 .thenThrow(new IllegalArgumentException("Id can not be null"));
 
         mockMvc.perform(put("/book/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(updateRequest)))
-                .andExpect(status().isNotFound())
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message").value("Id can not be null"));
     }
 

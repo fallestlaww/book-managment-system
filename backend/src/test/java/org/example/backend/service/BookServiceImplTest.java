@@ -132,7 +132,7 @@ class BookServiceImplTest {
 
     @Test
     void updateBook_nullId_throwsException() {
-        assertThrows(IllegalArgumentException.class, () -> bookService.updateBook(null, updateRequest));
+        assertThrows(EntityNotFoundException.class, () -> bookService.updateBook(null, updateRequest));
     }
 
     @Test

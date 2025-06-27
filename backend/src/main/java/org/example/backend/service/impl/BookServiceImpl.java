@@ -84,6 +84,15 @@ public class BookServiceImpl implements BookService {
         Book book = readBook(id);
         book.setTitle(request.getTitle());
         book.setAuthor(request.getAuthor());
+        
+        if (request.getAmount() != null) {
+            book.setAmount(request.getAmount());
+        }
+        
+        if (request.getAmountOfBorrowedBooks() != null) {
+            book.setAmountOfBorrowedBooks(request.getAmountOfBorrowedBooks());
+        }
+        
         return bookRepository.save(book);
     }
 
