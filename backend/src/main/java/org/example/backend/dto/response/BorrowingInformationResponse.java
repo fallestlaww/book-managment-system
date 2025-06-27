@@ -2,6 +2,7 @@ package org.example.backend.dto.response;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Value;
 import org.example.backend.model.Borrowing;
 
@@ -11,12 +12,8 @@ import org.example.backend.model.Borrowing;
  */
 @Value
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@Schema(description = "Borrowing information response")
 public class BorrowingInformationResponse {
-    /**
-     * Unique identifier for the borrowing transaction.
-     */
-    Long id;
-    
     /**
      * Name of the user who borrowed the book.
      */
@@ -33,7 +30,6 @@ public class BorrowingInformationResponse {
      * @param borrowing the borrowing entity to convert
      */
     public BorrowingInformationResponse(Borrowing borrowing) {
-        this.id = borrowing.getId();
         this.userName = borrowing.getUser().getName();
         this.bookTitle = borrowing.getBook().getTitle();
     }

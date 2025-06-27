@@ -2,6 +2,7 @@ package org.example.backend.dto.response;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Value;
 import org.example.backend.model.Book;
 
@@ -11,6 +12,7 @@ import org.example.backend.model.Book;
  */
 @Value
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@Schema(description = "Book information response")
 public class BookInformationResponse {
     /**
      * Title of the book.
